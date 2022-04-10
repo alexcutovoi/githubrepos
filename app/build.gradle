@@ -14,7 +14,7 @@ android {
         versionName "1.0"
 
         //Insert your PAT here. This avoids request limits
-        buildConfigField "String", "DEV_PAT_TOKEN", "\"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\""
+        buildConfigField "String", "DEV_PAT_TOKEN", "\"\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
