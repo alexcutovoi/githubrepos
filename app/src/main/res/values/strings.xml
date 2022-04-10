@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Github repos</string>
+    <string name="username_hint">Insira seu usuário</string>
+    <string name="password_hint">Insira sua senha</string>
+    <string name="required_field">Obrigatário</string>
+    <string name="login">Login</string>
+    <string name="profile_name_hint">Nome perfil</string>
+    <string name="repository_name_hint">Nome repositório</string>
+    <string name="stars_count_hint">0</string>
+    <string name="forks_count_hint">0</string>
+    <string name="no_internet_connection">Sem internet</string>
+    <string name="try_again">Tentar novamente</string>
+    <string name="generic_error">Ocorreu um erro</string>
+</resources>
