@@ -3,6 +3,7 @@ package com.alexcutovoi.githubrepos.main.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.alexcutovoi.githubrepos.common.DataState
 import com.alexcutovoi.githubrepos.main.domain.model.Repositories
 import com.alexcutovoi.githubrepos.main.domain.usecases.GetRepositoriesUseCase
 import kotlinx.coroutines.*
@@ -12,15 +13,24 @@ class GithubViewModel(private val getRepositoriesUseCase: GetRepositoriesUseCase
 
     fun getRepositories(page: Int){
         CoroutineScope(Dispatchers.Main).launch {
-            val repositories = withContext(Dispatchers.Default) {
+            val repositoriesData = withContext(Dispatchers.Default) {
                 repositoriesLiveData.postValue(ViewState.IsLoading<Repositories?>(null))
                 getRepositoriesUseCase.getRepositories(page)
             }
 
-            if(repositories == null){
-                repositoriesLiveData.postValue(ViewState.Error<Repositories?>("",null))
+            val repositoriesViewData = when(repositoriesData){
+                is DataState.Success -> {
+                    ViewState.Success<Repositories?>(repositoriesData.data)
+                }
+                is DataState.Error -> {
+                    ViewState.Error<Repositories?>(repositoriesData.exception?.localizedMessage ?: "An error occurred")
+                }
+                else -> {
+                    ViewState.Error<Repositories?>("An error occurred")
+                }
             }
-            repositoriesLiveData.postValue(ViewState.Success<Repositories?>(repositories))
+
+            repositoriesLiveData.postValue(repositoriesViewData)
         }
     }
 
