@@ -11,7 +11,7 @@ interface GithubApi{
 
     @GET("search/repositories")
     suspend fun listRepos(
-        //@Header("Authorization") token: String,
+        @Header("Authorization") token: String,
         @Query("q")language: String,
         @Query("sort")sortReposBy: String,
         @Query("page")currentPage: Int

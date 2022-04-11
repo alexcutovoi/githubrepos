@@ -27,7 +27,7 @@ class GithubRepositoryImpl(private val httpClient: HttpClient) : GithubRepositor
                     if (BuildConfig.DEV_PAT_TOKEN.isNotEmpty()) Constants.AUTH_TOKEN_PREFIX + BuildConfig.DEV_PAT_TOKEN else ""
 
                 val response = githubApi.listRepos(
-                    //authToken,
+                    authToken,
                     language,
                     sortReposBy,
                     currentPage
