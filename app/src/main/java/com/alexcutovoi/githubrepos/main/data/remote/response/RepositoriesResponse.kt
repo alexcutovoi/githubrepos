@@ -1,7 +1,6 @@
-package com.alexcutovoi.githubrepos.login.data.remote.response
+package com.alexcutovoi.githubrepos.main.data.remote.response
 
-import com.alexcutovoi.githubrepos.login.domain.model.Repository
-import com.alexcutovoi.githubrepos.login.domain.model.Repositories
+import com.alexcutovoi.githubrepos.main.domain.model.Repositories
 import com.google.gson.annotations.SerializedName
 
 data class RepositoriesResponse(

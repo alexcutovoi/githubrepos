@@ -1,4 +1,4 @@
-package com.alexcutovoi.githubrepos.login.domain.model
+package com.alexcutovoi.githubrepos.main.domain.model
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,17 +1,14 @@
-package com.alexcutovoi.githubrepos.login.data.repository
+package com.alexcutovoi.githubrepos.main.data.repository
 
 import com.alexcutovoi.githubrepos.BuildConfig
 import com.alexcutovoi.githubrepos.common.utils.Constants
-import com.alexcutovoi.githubrepos.login.data.remote.GithubApi
-import com.alexcutovoi.githubrepos.login.data.remote.HttpClient
-import com.alexcutovoi.githubrepos.login.data.remote.response.RepositoriesResponse
-import com.alexcutovoi.githubrepos.login.data.remote.response.toRepositories
-import com.alexcutovoi.githubrepos.login.domain.model.Repositories
+import com.alexcutovoi.githubrepos.main.data.remote.GithubApi
+import com.alexcutovoi.githubrepos.main.data.remote.HttpClient
+import com.alexcutovoi.githubrepos.main.data.remote.response.toRepositories
+import com.alexcutovoi.githubrepos.main.domain.model.Repositories
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.ResponseBody
 import retrofit2.HttpException
-import retrofit2.Response
 
 class GithubRepositoryImpl(private val httpClient: HttpClient) : GithubRepository{
     private var githubApi: GithubApi

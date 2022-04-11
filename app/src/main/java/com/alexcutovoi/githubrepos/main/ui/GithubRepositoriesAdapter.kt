@@ -1,17 +1,15 @@
-package com.alexcutovoi.githubrepos.login.ui
+package com.alexcutovoi.githubrepos.main.ui
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alexcutovoi.githubrepos.R
-import com.alexcutovoi.githubrepos.login.domain.model.Repository
+import com.alexcutovoi.githubrepos.main.domain.model.Repository
 import com.bumptech.glide.Glide
 
 class GithubRepositoriesAdapter(private val context: Context, newRepositories: MutableList<Repository>, private val recyclerView: RecyclerView? = null, private var callback: (() -> Unit)? = null) : RecyclerView.Adapter<GithubRepositoriesAdapter.RepositoryInfoViewHolder>() {

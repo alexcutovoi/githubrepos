@@ -1,4 +1,4 @@
-package com.alexcutovoi.githubrepos.login.ui
+package com.alexcutovoi.githubrepos.main.ui
 
 interface BaseView {
     fun showLoading()

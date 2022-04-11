@@ -1,4 +1,4 @@
-package com.alexcutovoi.githubrepos.login.ui
+package com.alexcutovoi.githubrepos.main.ui
 
 sealed class ViewState<T>(val data: T? = null, val message: String? = null) {
     class Success<T>(data: T) : ViewState<T>(data)

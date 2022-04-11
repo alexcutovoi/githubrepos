@@ -1,6 +1,6 @@
-package com.alexcutovoi.githubrepos.login.data.remote.response
+package com.alexcutovoi.githubrepos.main.data.remote.response
 
-import com.alexcutovoi.githubrepos.login.domain.model.License
+import com.alexcutovoi.githubrepos.main.domain.model.License
 
 data class LicenseResponse(
     val key: String,

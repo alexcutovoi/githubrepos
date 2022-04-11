@@ -1,4 +1,4 @@
-package com.alexcutovoi.githubrepos.login.ui
+package com.alexcutovoi.githubrepos.main.ui
 
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
@@ -7,12 +7,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.alexcutovoi.githubrepos.R
-import com.alexcutovoi.githubrepos.common.utils.InternetManager
+import com.alexcutovoi.githubrepos.common.InternetManager
 import com.alexcutovoi.githubrepos.databinding.ActivityMainBinding
-import com.alexcutovoi.githubrepos.login.data.remote.HttpClientImpl
-import com.alexcutovoi.githubrepos.login.data.repository.GithubRepositoryImpl
-import com.alexcutovoi.githubrepos.login.domain.model.Repositories
-import com.alexcutovoi.githubrepos.login.domain.usecases.GetRepositoriesUseCase
+import com.alexcutovoi.githubrepos.main.data.remote.HttpClientImpl
+import com.alexcutovoi.githubrepos.main.data.repository.GithubRepositoryImpl
+import com.alexcutovoi.githubrepos.main.domain.model.Repositories
+import com.alexcutovoi.githubrepos.main.domain.usecases.GetRepositoriesUseCase
 
 class MainActivity : AppCompatActivity(), BaseView {
     private lateinit var activityLoginBinding: ActivityMainBinding

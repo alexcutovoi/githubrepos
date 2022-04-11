@@ -1,10 +1,10 @@
-package com.alexcutovoi.githubrepos.login.ui
+package com.alexcutovoi.githubrepos.main.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.alexcutovoi.githubrepos.login.domain.model.Repositories
-import com.alexcutovoi.githubrepos.login.domain.usecases.GetRepositoriesUseCase
+import com.alexcutovoi.githubrepos.main.domain.model.Repositories
+import com.alexcutovoi.githubrepos.main.domain.usecases.GetRepositoriesUseCase
 import kotlinx.coroutines.*
 
 class GithubViewModel(private val getRepositoriesUseCase: GetRepositoriesUseCase) : ViewModel() {

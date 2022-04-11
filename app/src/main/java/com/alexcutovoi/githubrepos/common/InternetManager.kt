@@ -1,4 +1,4 @@
-package com.alexcutovoi.githubrepos.common.utils
+package com.alexcutovoi.githubrepos.common
 
 import android.net.ConnectivityManager
 import android.net.Network

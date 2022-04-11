@@ -1,6 +1,6 @@
-package com.alexcutovoi.githubrepos.login.data.remote
+package com.alexcutovoi.githubrepos.main.data.remote
 
-import com.alexcutovoi.githubrepos.login.data.remote.response.RepositoriesResponse
+import com.alexcutovoi.githubrepos.main.data.remote.response.RepositoriesResponse
 import retrofit2.Response
 
 import retrofit2.http.GET

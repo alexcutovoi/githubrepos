@@ -1,4 +1,4 @@
-package com.alexcutovoi.githubrepos.login.data.remote
+package com.alexcutovoi.githubrepos.main.data.remote
 
 interface HttpClient {
     fun create(baseUrl: String)

@@ -1,6 +1,6 @@
-package com.alexcutovoi.githubrepos.login.data.remote.response
+package com.alexcutovoi.githubrepos.main.data.remote.response
 
-import com.alexcutovoi.githubrepos.login.domain.model.Owner
+import com.alexcutovoi.githubrepos.main.domain.model.Owner
 
 data class OwnerResponse(
     val avatar_url: String,
