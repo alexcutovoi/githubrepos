@@ -65,11 +65,9 @@ class MainActivity : AppCompatActivity(), BaseView {
 
         }
 
-        activityLoginBinding.tryAgainButton.setOnClickListener {
+        activityLoginBinding.tryAgainButton.setOnClickListener   {
             getData()
         }
-
-        getData()
     }
 
     override fun showLoading() {

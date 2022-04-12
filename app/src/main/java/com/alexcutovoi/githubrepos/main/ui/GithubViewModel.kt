@@ -9,7 +9,11 @@ import com.alexcutovoi.githubrepos.main.domain.usecases.GetRepositoriesUseCase
 import kotlinx.coroutines.*
 
 class GithubViewModel(private val getRepositoriesUseCase: GetRepositoriesUseCase) : ViewModel() {
-    val repositoriesLiveData = MutableLiveData<ViewState<Repositories?>>()
+    val repositoriesLiveData: MutableLiveData<ViewState<Repositories?>> by lazy {
+        MutableLiveData<ViewState<Repositories?>>().also {
+            getRepositories(1)
+        }
+    }
 
     fun getRepositories(page: Int){
         CoroutineScope(Dispatchers.Main).launch {
