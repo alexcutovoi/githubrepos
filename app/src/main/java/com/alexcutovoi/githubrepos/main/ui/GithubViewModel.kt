@@ -20,8 +20,6 @@ class GithubViewModel(
     private val savePageUseCase: SavePageUseCase,
     private val getPageUseCase: GetPageUseCase) : ViewModel() {
 
-    private val channel = Channel<Int>(capacity = 1)
-
     private val viewModelJob = SupervisorJob()
 
     private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
