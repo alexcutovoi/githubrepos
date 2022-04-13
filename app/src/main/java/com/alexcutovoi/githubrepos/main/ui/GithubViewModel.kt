@@ -20,15 +20,16 @@ class GithubViewModel(
     private val savePageUseCase: SavePageUseCase,
     private val getPageUseCase: GetPageUseCase) : ViewModel() {
 
+    private val channel = Channel<Int>(capacity = 1)
+
     private val viewModelJob = SupervisorJob()
 
     private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    private var page: Int = 1
 
     val repositoriesLiveData: MutableLiveData<ViewState<Repositories?>> by lazy {
         MutableLiveData<ViewState<Repositories?>>().also {
-            viewModelScope.launch {
-                isCacheEmpty()
-            }
+            init()
         }
     }
 
@@ -37,14 +38,14 @@ class GithubViewModel(
             val repositoriesData = withContext(Dispatchers.Default) {
                 repositoriesLiveData.postValue(ViewState.IsLoading<Repositories?>(null))
 
-                getRepositoriesUseCase.getRepositories(0)
+                getRepositoriesUseCase.getRepositories(++page)
             }
 
             val repositoriesViewData = when(repositoriesData){
                 is DataState.Success -> {
                     val list = (repositoriesData.data as Repositories).repositoryList
-                    CoroutineScope(Dispatchers.Main).launch {
-                        savePageUseCase.saveCurrentPage(0)
+                    viewModelScope.launch {
+                        savePageUseCase.saveCurrentPage(page)
                         saveRepositoriesUseCase.saveRepositories(repositoriesData.data)
                     }
 
@@ -68,7 +69,7 @@ class GithubViewModel(
         viewModelScope.launch {
             val repositoriesData = withContext(Dispatchers.Default) {
                 repositoriesLiveData.postValue(ViewState.IsLoading<Repositories?>(null))
-                getCachedRepositoriesUseCase.getRepositories(0)
+                getCachedRepositoriesUseCase.getRepositories(page)
             }
 
             val repositoriesViewData = when(repositoriesData){
@@ -122,6 +123,58 @@ class GithubViewModel(
                         R.string.generic_error)
                     )
                 }
+            }
+        }
+    }
+
+    private fun getPage() {
+        viewModelScope.launch {
+            val pageData = withContext(Dispatchers.Default) {
+                getPageUseCase.getCurrentPage()
+            }
+
+            when (pageData) {
+                is DataState.Success -> {
+                    val page = (pageData.data as Int)
+                    channel.send(page)
+                }
+                is DataState.Error -> {
+                    ViewState.Error<Repositories?>(
+                        pageData.exception?.localizedMessage
+                            ?: GithubApplication.getApplicationContext().getString(
+                                R.string.generic_error
+                            )
+                    )
+                }
+                else -> {
+                    ViewState.Error<Repositories?>(
+                        GithubApplication.getApplicationContext().getString(
+                            R.string.generic_error
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private fun init() {
+        viewModelScope.launch {
+            withContext(Dispatchers.Default) {
+                getPage()
+            }
+        }
+
+        viewModelScope.launch {
+            try {
+                page = channel.receive()
+                channel.close()
+                isCacheEmpty()
+            } catch(e: Exception){
+                ViewState.Error<Repositories?>(
+                    GithubApplication.getApplicationContext().getString(
+                        R.string.generic_error
+                    )
+                )
             }
         }
     }
