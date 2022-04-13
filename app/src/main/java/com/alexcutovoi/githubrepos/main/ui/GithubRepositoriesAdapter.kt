@@ -13,8 +13,8 @@ import com.alexcutovoi.githubrepos.main.domain.model.Repository
 import com.bumptech.glide.Glide
 
 class GithubRepositoriesAdapter(private val context: Context, newRepositories: MutableList<Repository>, private val recyclerView: RecyclerView? = null, private var callback: (() -> Unit)? = null) : RecyclerView.Adapter<GithubRepositoriesAdapter.RepositoryInfoViewHolder>() {
-    var currentPage = 1
-        private set
+    /*var currentPage = 1
+        private set*/
 
     private var repositories = mutableListOf<Repository>()
     private var isLimitReached = false
@@ -59,7 +59,7 @@ class GithubRepositoriesAdapter(private val context: Context, newRepositories: M
                 layoutManager.let {
                     if(!isLimitReached && layoutManager.itemCount <= layoutManager.findLastCompletelyVisibleItemPosition()+1) {
                         isLimitReached = !isLimitReached
-                        ++currentPage
+                        //++currentPage
                         callback?.invoke()
                     }
                 }

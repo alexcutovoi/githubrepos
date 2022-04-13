@@ -9,4 +9,5 @@ interface GithubRepository{
     suspend fun saveRepos(repositories: Repositories)
     suspend fun saveCurrentPage(pageNum: Int)
     suspend fun getRepositoriesCount(): DataState<Int>
+    suspend fun getPageNumber(): DataState<Int>
 }

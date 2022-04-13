@@ -50,4 +50,14 @@ class GithubRepositoryLocalImpl(private val githubDao: GithubDao): GithubReposit
             }
         }
     }
+
+    override suspend fun getPageNumber(): DataState<Int> {
+        return withContext(Dispatchers.Default) {
+            try {
+                DataState.Success<Int>(githubDao.getPageNumber())
+            } catch(e: Exception) {
+                DataState.Error<Int>(null, null)
+            }
+        }
+    }
 }

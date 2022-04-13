@@ -14,7 +14,9 @@ import com.alexcutovoi.githubrepos.main.data.remote.HttpClientImpl
 import com.alexcutovoi.githubrepos.main.data.repository.GithubRepositoryImpl
 import com.alexcutovoi.githubrepos.main.data.repository.GithubRepositoryLocalImpl
 import com.alexcutovoi.githubrepos.main.domain.model.Repositories
+import com.alexcutovoi.githubrepos.main.domain.usecases.GetPageUseCase
 import com.alexcutovoi.githubrepos.main.domain.usecases.GetRepositoriesUseCase
+import com.alexcutovoi.githubrepos.main.domain.usecases.SavePageUseCase
 import com.alexcutovoi.githubrepos.main.domain.usecases.SaveRepositoriesUseCase
 
 class MainActivity : AppCompatActivity(), BaseView {
@@ -43,7 +45,9 @@ class MainActivity : AppCompatActivity(), BaseView {
         gitHubViewModel = ViewModelProvider(this, GithubViewModel.GithubViewModelFactory(
             GetRepositoriesUseCase(GithubRepositoryImpl(HttpClientImpl())),
             GetRepositoriesUseCase(GithubRepositoryLocalImpl(GithubDatabase.getDb().getGithubDao())),
-            SaveRepositoriesUseCase(GithubRepositoryLocalImpl(GithubDatabase.getDb().getGithubDao())))
+            SaveRepositoriesUseCase(GithubRepositoryLocalImpl(GithubDatabase.getDb().getGithubDao())),
+            SavePageUseCase(GithubRepositoryLocalImpl(GithubDatabase.getDb().getGithubDao())),
+            GetPageUseCase(GithubRepositoryLocalImpl(GithubDatabase.getDb().getGithubDao())))
         ).get(GithubViewModel::class.java)
 
         gitHubViewModel.repositoriesLiveData.observe(this) { viewState ->
@@ -92,7 +96,7 @@ class MainActivity : AppCompatActivity(), BaseView {
 
     private fun getData() {
         if(internetManager.checkInternet()) {
-            gitHubViewModel.getRepositories(repositoriesAdapter.currentPage)
+            gitHubViewModel.getRepositories()
         } else {
             Toast.makeText(this, getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
             hideLoading()

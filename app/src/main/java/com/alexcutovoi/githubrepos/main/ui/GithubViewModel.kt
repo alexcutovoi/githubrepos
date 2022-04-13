@@ -9,38 +9,44 @@ import com.alexcutovoi.githubrepos.common.DataState
 import com.alexcutovoi.githubrepos.main.data.local.GithubDatabase
 import com.alexcutovoi.githubrepos.main.data.repository.GithubRepositoryLocalImpl
 import com.alexcutovoi.githubrepos.main.domain.model.Repositories
-import com.alexcutovoi.githubrepos.main.domain.model.Repository
-import com.alexcutovoi.githubrepos.main.domain.usecases.GetRepositoriesCountUseCase
-import com.alexcutovoi.githubrepos.main.domain.usecases.GetRepositoriesUseCase
-import com.alexcutovoi.githubrepos.main.domain.usecases.SaveRepositoriesUseCase
+import com.alexcutovoi.githubrepos.main.domain.usecases.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
 
 class GithubViewModel(
     private val getRepositoriesUseCase: GetRepositoriesUseCase,
     private val getCachedRepositoriesUseCase: GetRepositoriesUseCase,
-    private val saveRepositoriesUseCase: SaveRepositoriesUseCase) : ViewModel() {
+    private val saveRepositoriesUseCase: SaveRepositoriesUseCase,
+    private val savePageUseCase: SavePageUseCase,
+    private val getPageUseCase: GetPageUseCase) : ViewModel() {
+
+    private val channel = Channel<Int>(capacity = 1)
+
+    private val viewModelJob = SupervisorJob()
+
+    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     val repositoriesLiveData: MutableLiveData<ViewState<Repositories?>> by lazy {
         MutableLiveData<ViewState<Repositories?>>().also {
-            CoroutineScope(Dispatchers.Main).launch {
-                withContext(Dispatchers.Default) {
-                    isCacheEmpty()
-                }
+            viewModelScope.launch {
+                isCacheEmpty()
             }
         }
     }
 
-    fun getRepositories(page: Int){
-        CoroutineScope(Dispatchers.Main).launch {
+    fun getRepositories(){
+        viewModelScope.launch {
             val repositoriesData = withContext(Dispatchers.Default) {
                 repositoriesLiveData.postValue(ViewState.IsLoading<Repositories?>(null))
-                getRepositoriesUseCase.getRepositories(page)
+
+                getRepositoriesUseCase.getRepositories(0)
             }
 
             val repositoriesViewData = when(repositoriesData){
                 is DataState.Success -> {
                     val list = (repositoriesData.data as Repositories).repositoryList
                     CoroutineScope(Dispatchers.Main).launch {
+                        savePageUseCase.saveCurrentPage(0)
                         saveRepositoriesUseCase.saveRepositories(repositoriesData.data)
                     }
 
@@ -61,7 +67,7 @@ class GithubViewModel(
     }
 
     private fun getLocalRepositories(){
-        CoroutineScope(Dispatchers.Main).launch {
+        viewModelScope.launch {
             val repositoriesData = withContext(Dispatchers.Default) {
                 repositoriesLiveData.postValue(ViewState.IsLoading<Repositories?>(null))
                 getCachedRepositoriesUseCase.getRepositories(0)
@@ -89,7 +95,7 @@ class GithubViewModel(
     }
 
     private suspend fun isCacheEmpty() {
-        CoroutineScope(Dispatchers.Main).launch {
+        viewModelScope.launch {
             val repositoriesCountData = withContext(Dispatchers.Default) {
                 val cacheUseCase = GetRepositoriesCountUseCase(
                     GithubRepositoryLocalImpl(
@@ -105,7 +111,7 @@ class GithubViewModel(
                     if(hasData) {
                         getLocalRepositories()
                     } else {
-                        getRepositories(1)
+                        getRepositories()
                     }
                 }
                 is DataState.Error -> {
@@ -125,9 +131,16 @@ class GithubViewModel(
     class GithubViewModelFactory(
         private val getRepositoriesUseCase: GetRepositoriesUseCase,
         private val getCachedRepositoriesUseCase: GetRepositoriesUseCase,
-        private val saveRepositoriesUseCase: SaveRepositoriesUseCase) : ViewModelProvider.Factory {
+        private val saveRepositoriesUseCase: SaveRepositoriesUseCase,
+        private val savePageUseCase: SavePageUseCase,
+        private val getPageUseCase: GetPageUseCase) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return GithubViewModel(getRepositoriesUseCase, getCachedRepositoriesUseCase, saveRepositoriesUseCase) as T
+            return GithubViewModel(getRepositoriesUseCase, getCachedRepositoriesUseCase, saveRepositoriesUseCase, savePageUseCase, getPageUseCase) as T
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }

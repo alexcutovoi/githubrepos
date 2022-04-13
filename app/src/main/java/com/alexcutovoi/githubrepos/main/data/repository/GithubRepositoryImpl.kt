@@ -56,4 +56,8 @@ class GithubRepositoryImpl(private val httpClient: HttpClient): GithubRepository
     override suspend fun getRepositoriesCount(): DataState<Int> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getPageNumber(): DataState<Int> {
+        TODO("Not yet implemented")
+    }
 }
