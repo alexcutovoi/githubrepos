@@ -1,17 +1,15 @@
 package com.alexcutovoi.githubrepos.main.data.local
 
-import android.content.Context
 import androidx.room.*
 import com.alexcutovoi.githubrepos.GithubApplication
 import com.alexcutovoi.githubrepos.common.utils.Constants
 import com.alexcutovoi.githubrepos.main.data.local.entity.LicenseEntity
 import com.alexcutovoi.githubrepos.main.data.local.entity.OwnerEntity
+import com.alexcutovoi.githubrepos.main.data.local.entity.PageEntity
 import com.alexcutovoi.githubrepos.main.data.local.entity.RepositoryEntity
-import com.alexcutovoi.githubrepos.main.data.local.entity.convertes.LicenseConverter
 
 @Database(entities = [LicenseEntity::class, OwnerEntity::class,
-    RepositoryEntity::class], version = 1)
-@TypeConverters(LicenseConverter::class)
+    RepositoryEntity::class, PageEntity::class], version = 1)
 abstract class GithubDatabase : RoomDatabase(){
     abstract fun getGithubDao(): GithubDao
 

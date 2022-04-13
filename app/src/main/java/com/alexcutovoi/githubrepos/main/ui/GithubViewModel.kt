@@ -47,14 +47,12 @@ class GithubViewModel(
                     ViewState.Success<Repositories?>(Repositories(list, (repositoriesData.data as Repositories).totalCount))
                 }
                 is DataState.Error -> {
-                    ViewState.Error<Repositories?>(repositoriesData.exception?.localizedMessage ?: GithubApplication.getApplicationContext().getString(
-                        R.string.generic_error)
-                    )
+                    ViewState.Error<Repositories?>(repositoriesData.exception?.localizedMessage ?:
+                        GithubApplication.getApplicationContext().getString(R.string.generic_error))
                 }
                 else -> {
-                    ViewState.Error<Repositories?>(GithubApplication.getApplicationContext().getString(
-                        R.string.generic_error)
-                    )
+                    ViewState.Error<Repositories?>(
+                        GithubApplication.getApplicationContext().getString(R.string.generic_error))
                 }
             }
 

@@ -49,6 +49,10 @@ class GithubRepositoryImpl(private val httpClient: HttpClient): GithubRepository
         TODO("Not yet implemented")
     }
 
+    override suspend fun saveCurrentPage(pageNum: Int) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getRepositoriesCount(): DataState<Int> {
         TODO("Not yet implemented")
     }

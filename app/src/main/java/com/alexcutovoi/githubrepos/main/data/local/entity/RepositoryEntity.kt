@@ -3,8 +3,6 @@ package com.alexcutovoi.githubrepos.main.data.local.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.alexcutovoi.githubrepos.main.data.local.entity.convertes.LicenseConverter
 import com.alexcutovoi.githubrepos.main.domain.model.Repository
 
 @Entity(tableName = "repository")

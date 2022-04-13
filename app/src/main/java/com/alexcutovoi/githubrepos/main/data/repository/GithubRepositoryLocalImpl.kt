@@ -3,6 +3,7 @@ package com.alexcutovoi.githubrepos.main.data.repository
 import com.alexcutovoi.githubrepos.common.DataState
 import com.alexcutovoi.githubrepos.main.data.local.GithubDao
 import com.alexcutovoi.githubrepos.main.data.local.entity.toRepository
+import com.alexcutovoi.githubrepos.main.domain.model.Page
 import com.alexcutovoi.githubrepos.main.domain.model.Repositories
 import com.alexcutovoi.githubrepos.main.domain.model.Repository
 import com.alexcutovoi.githubrepos.main.domain.model.toEntity
@@ -34,6 +35,10 @@ class GithubRepositoryLocalImpl(private val githubDao: GithubDao): GithubReposit
             val repository = currentRepository.toEntity()
             githubDao.addRepository(repository)
         }
+    }
+
+    override suspend fun saveCurrentPage(pageNum: Int) {
+        githubDao.addPage(Page(pageNum).toEntity())
     }
 
     override suspend fun getRepositoriesCount(): DataState<Int> {
