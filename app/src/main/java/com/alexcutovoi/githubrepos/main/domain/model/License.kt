@@ -1,10 +1,12 @@
 package com.alexcutovoi.githubrepos.main.domain.model
 
-import com.google.gson.annotations.SerializedName
+import com.alexcutovoi.githubrepos.main.data.local.entity.LicenseEntity
 
 data class License(
-    @SerializedName("name")
     val licenseName: String,
-    @SerializedName("url")
     val licenseUrl: String
 )
+
+fun License.toEntity(): LicenseEntity {
+    return LicenseEntity(licenseName = this.licenseName, licenseUrl = this.licenseUrl)
+}

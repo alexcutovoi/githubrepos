@@ -89,6 +89,7 @@ data class RepositoryResponse(
 
 fun RepositoryResponse.toRepository(): Repository {
     return Repository(
+        id = id,
         repositoryUrl = clone_url,
         description = description ?: "No descripton",
         forks = forks,

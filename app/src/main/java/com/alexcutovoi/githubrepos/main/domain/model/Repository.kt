@@ -1,8 +1,10 @@
 package com.alexcutovoi.githubrepos.main.domain.model
 
+import com.alexcutovoi.githubrepos.main.data.local.entity.RepositoryEntity
 import com.google.gson.annotations.SerializedName
 
 data class Repository(
+    val id: Int,
     @SerializedName("clone_url")
     val repositoryUrl: String,
     val description: String,
@@ -19,3 +21,18 @@ data class Repository(
     @SerializedName("stargazers_count")
     val stargazersCount: Int
 )
+
+fun Repository.toEntity(): RepositoryEntity {
+    return RepositoryEntity(
+        repositoryid = this.id,
+        repositoryUrl = this.repositoryUrl,
+        description = this.description,
+        forks = this.forks,
+        forksCount = this.forksCount,
+        itemUrl = this.itemUrl,
+        license = this.license?.toEntity(),
+        repositoryName = this.repositoryName,
+        owner = this.owner.toEntity(),
+        stargazersCount = this.stargazersCount
+    )
+}

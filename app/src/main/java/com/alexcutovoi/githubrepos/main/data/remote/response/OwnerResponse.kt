@@ -24,5 +24,5 @@ data class OwnerResponse(
 )
 
 fun OwnerResponse.toOwner(): Owner {
-    return Owner(avatarImageUrl = avatar_url, ownerUrl = html_url, name = login)
+    return Owner(id = id, avatarImageUrl = avatar_url, ownerUrl = html_url, name = login)
 }

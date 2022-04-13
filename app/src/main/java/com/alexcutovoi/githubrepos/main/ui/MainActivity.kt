@@ -9,10 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.alexcutovoi.githubrepos.R
 import com.alexcutovoi.githubrepos.common.InternetManager
 import com.alexcutovoi.githubrepos.databinding.ActivityMainBinding
+import com.alexcutovoi.githubrepos.main.data.local.GithubDatabase
 import com.alexcutovoi.githubrepos.main.data.remote.HttpClientImpl
 import com.alexcutovoi.githubrepos.main.data.repository.GithubRepositoryImpl
+import com.alexcutovoi.githubrepos.main.data.repository.GithubRepositoryLocalImpl
 import com.alexcutovoi.githubrepos.main.domain.model.Repositories
 import com.alexcutovoi.githubrepos.main.domain.usecases.GetRepositoriesUseCase
+import com.alexcutovoi.githubrepos.main.domain.usecases.SaveRepositoriesUseCase
 
 class MainActivity : AppCompatActivity(), BaseView {
     private lateinit var activityLoginBinding: ActivityMainBinding
@@ -38,8 +41,10 @@ class MainActivity : AppCompatActivity(), BaseView {
         activityLoginBinding.repositories.adapter = repositoriesAdapter
 
         gitHubViewModel = ViewModelProvider(this, GithubViewModel.GithubViewModelFactory(
-            GetRepositoriesUseCase(GithubRepositoryImpl(HttpClientImpl()))
-        )).get(GithubViewModel::class.java)
+            GetRepositoriesUseCase(GithubRepositoryImpl(HttpClientImpl())),
+            GetRepositoriesUseCase(GithubRepositoryLocalImpl(GithubDatabase.getDb().getGithubDao())),
+            SaveRepositoriesUseCase(GithubRepositoryLocalImpl(GithubDatabase.getDb().getGithubDao())))
+        ).get(GithubViewModel::class.java)
 
         gitHubViewModel.repositoriesLiveData.observe(this) { viewState ->
             when(viewState){

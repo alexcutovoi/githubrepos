@@ -7,5 +7,6 @@ class Constants {
         const val LANGUAGE_QUERY = "language:kotlin"
         const val DEFAULT_SORT_ORDER = "stars"
         const val AUTH_TOKEN_PREFIX = "token "
+        const val DATABASE_NAME = "github_database"
     }
 }

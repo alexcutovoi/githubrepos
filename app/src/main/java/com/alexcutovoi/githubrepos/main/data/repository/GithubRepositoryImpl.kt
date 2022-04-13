@@ -13,8 +13,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
-class GithubRepositoryImpl(private val httpClient: HttpClient) : GithubRepository{
-    private var githubApi: GithubApi
+class GithubRepositoryImpl(private val httpClient: HttpClient): GithubRepository{
+    private val githubApi: GithubApi
 
     init {
         httpClient.create(Constants.GITHUB_BASE_URL)
@@ -43,5 +43,13 @@ class GithubRepositoryImpl(private val httpClient: HttpClient) : GithubRepositor
                 DataState.Error<Repositories?>(null, e)
             }
         }
+    }
+
+    override suspend fun saveRepos(repositories: Repositories) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getRepositoriesCount(): DataState<Int> {
+        TODO("Not yet implemented")
     }
 }
