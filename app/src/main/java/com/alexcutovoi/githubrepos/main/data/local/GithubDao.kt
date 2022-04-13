@@ -17,7 +17,7 @@ interface GithubDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addRepository(repository: RepositoryEntity)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addPage(page: PageEntity)
 
     @Query("SELECT * FROM repository")

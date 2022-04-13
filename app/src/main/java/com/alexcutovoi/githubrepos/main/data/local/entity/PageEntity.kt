@@ -6,7 +6,7 @@ import com.alexcutovoi.githubrepos.main.domain.model.Page
 
 @Entity(tableName = "page")
 data class PageEntity (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     val pageId: Int = 0,
     var pageNumber: Int = 0
 )
