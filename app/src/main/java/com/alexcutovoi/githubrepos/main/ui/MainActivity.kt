@@ -80,10 +80,10 @@ class MainActivity : AppCompatActivity(), BaseView {
     }
 
     override fun showLoading() {
-        activityLoginBinding.loading.loadingScreenView.visibility = View.VISIBLE
+        activityLoginBinding.reloadContainer.visibility = View.VISIBLE
     }
     override fun hideLoading() {
-        activityLoginBinding.loading.loadingScreenView.visibility = View.GONE
+        activityLoginBinding.reloadContainer.visibility = View.GONE
     }
 
     private fun showReloadButton(){

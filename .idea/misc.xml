@@ -7,9 +7,9 @@
         <entry key="app/src/main/res/drawable/rotate_style.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_base.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/loading_view.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/repository_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/repository_layout.xml" value="0.22" />
       </map>
     </option>
   </component>
